@@ -376,89 +376,98 @@ void DXCom::SettingVertex()
 	vertexDate_ = nullptr;
 	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexDate_));
 
-	const float pi = 3.1415926535f;
-	const uint32_t kSubdivision = 16;
-	const float kLonEvery = (pi * 2.0f) / static_cast<float>(kSubdivision);
-	const float kLatEvery = (pi) / static_cast<float>(kSubdivision);
+	SetVertexData(0, { -0.5f,-0.5f,0.0f,1.0f }, { 0.0f,1.0f }, { 0.0f,0.0f,-1.0f });
+	SetVertexData(1, { 0.0f,0.5f,0.0f,1.0f }, { 0.5f,0.0f }, { 0.0f,0.0f,-1.0f });
+	SetVertexData(2, { 0.5f,-0.5f,0.0f,1.0f }, { 1.0f,1.0f }, { 0.0f,0.0f,-1.0f });
 
-	for (uint32_t latIndex = 0; latIndex < kSubdivision; latIndex++)
-	{
-		float lat = -pi / 2.0f + kLatEvery * latIndex;
-		for (uint32_t lonIndex = 0; lonIndex < kSubdivision; lonIndex++)
-		{
-			float lon = lonIndex * kLonEvery;
-			uint32_t startIndex = (latIndex * kSubdivision + lonIndex) * 6;
-
-			float u = float(lonIndex) / float(kSubdivision);
-			float v = 1.0f - float(latIndex) / float(kSubdivision);
-
-			vertexDate_[startIndex].position.X = cosf(lat) * cosf(lon);
-			vertexDate_[startIndex].position.Y = sinf(lat);
-			vertexDate_[startIndex].position.Z = cosf(lat) * sinf(lon);
-			vertexDate_[startIndex].position.W = 1.0f;
-			vertexDate_[startIndex].texcoord = { u,v };
-
-			vertexDate_[startIndex].normal.x = vertexDate_[startIndex].position.X;
-			vertexDate_[startIndex].normal.y = vertexDate_[startIndex].position.Y;
-			vertexDate_[startIndex].normal.z = vertexDate_[startIndex].position.Z;
+	SetVertexData(3, { -0.5f,-0.5f,0.5f,1.0f }, { 0.0f,1.0f }, { 0.0f,0.0f,-1.0f });
+	SetVertexData(4, { 0.0f,0.0f,0.0f,1.0f }, { 0.5f,0.0f }, { 0.0f,0.0f,-1.0f });
+	SetVertexData(5, { 0.5f,-0.5f,-0.5f,1.0f }, { 1.0f,1.0f }, { 0.0f,0.0f,-1.0f });
 
 
-			vertexDate_[startIndex + 1].position.X = cosf(lat + kLatEvery) * cosf(lon);
-			vertexDate_[startIndex + 1].position.Y = sinf(lat + kLatEvery);
-			vertexDate_[startIndex + 1].position.Z = cosf(lat + kLatEvery) * sinf(lon);
-			vertexDate_[startIndex + 1].position.W = 1.0f;
-			vertexDate_[startIndex + 1].texcoord = { u,v - (float(1.0f) / float(kSubdivision)) };
+	//const float pi = 3.1415926535f;
+	//const uint32_t kSubdivision = 16;
+	//const float kLonEvery = (pi * 2.0f) / static_cast<float>(kSubdivision);
+	//const float kLatEvery = (pi) / static_cast<float>(kSubdivision);
 
-			vertexDate_[startIndex + 1].normal.x = vertexDate_[startIndex + 1].position.X;
-			vertexDate_[startIndex + 1].normal.y = vertexDate_[startIndex + 1].position.Y;
-			vertexDate_[startIndex + 1].normal.z = vertexDate_[startIndex + 1].position.Z;
+	//for (uint32_t latIndex = 0; latIndex < kSubdivision; latIndex++)
+	//{
+	//	float lat = -pi / 2.0f + kLatEvery * latIndex;
+	//	for (uint32_t lonIndex = 0; lonIndex < kSubdivision; lonIndex++)
+	//	{
+	//		float lon = lonIndex * kLonEvery;
+	//		uint32_t startIndex = (latIndex * kSubdivision + lonIndex) * 6;
 
+	//		float u = float(lonIndex) / float(kSubdivision);
+	//		float v = 1.0f - float(latIndex) / float(kSubdivision);
 
-			vertexDate_[startIndex + 2].position.X = cosf(lat) * cosf(lon + kLonEvery);
-			vertexDate_[startIndex + 2].position.Y = sinf(lat);
-			vertexDate_[startIndex + 2].position.Z = cosf(lat) * sinf(lon + kLonEvery);
-			vertexDate_[startIndex + 2].position.W = 1.0f;
-			vertexDate_[startIndex + 2].texcoord = { u + (float(1.0f) / float(kSubdivision)),v };
+	//		vertexDate_[startIndex].position.X = cosf(lat) * cosf(lon);
+	//		vertexDate_[startIndex].position.Y = sinf(lat);
+	//		vertexDate_[startIndex].position.Z = cosf(lat) * sinf(lon);
+	//		vertexDate_[startIndex].position.W = 1.0f;
+	//		vertexDate_[startIndex].texcoord = { u,v };
 
-			vertexDate_[startIndex + 2].normal.x = vertexDate_[startIndex + 2].position.X;
-			vertexDate_[startIndex + 2].normal.y = vertexDate_[startIndex + 2].position.Y;
-			vertexDate_[startIndex + 2].normal.z = vertexDate_[startIndex + 2].position.Z;
-
-
-			vertexDate_[startIndex + 3].position.X = cosf(lat + kLatEvery) * cosf(lon);
-			vertexDate_[startIndex + 3].position.Y = sinf(lat + kLatEvery);
-			vertexDate_[startIndex + 3].position.Z = cosf(lat + kLatEvery) * sinf(lon);
-			vertexDate_[startIndex + 3].position.W = 1.0f;
-			vertexDate_[startIndex + 3].texcoord = { u,v - (float(1.0f) / float(kSubdivision)) };
-
-			vertexDate_[startIndex + 3].normal.x = vertexDate_[startIndex + 3].position.X;
-			vertexDate_[startIndex + 3].normal.y = vertexDate_[startIndex + 3].position.Y;
-			vertexDate_[startIndex + 3].normal.z = vertexDate_[startIndex + 3].position.Z;
+	//		vertexDate_[startIndex].normal.x = vertexDate_[startIndex].position.X;
+	//		vertexDate_[startIndex].normal.y = vertexDate_[startIndex].position.Y;
+	//		vertexDate_[startIndex].normal.z = vertexDate_[startIndex].position.Z;
 
 
-			vertexDate_[startIndex + 4].position.X = cosf(lat + kLatEvery) * cosf(lon + kLonEvery);
-			vertexDate_[startIndex + 4].position.Y = sinf(lat + kLatEvery);
-			vertexDate_[startIndex + 4].position.Z = cosf(lat + kLatEvery) * sinf(lon + kLonEvery);
-			vertexDate_[startIndex + 4].position.W = 1.0f;
-			vertexDate_[startIndex + 4].texcoord = { u + (float(1.0f) / float(kSubdivision)),v - (float(1.0f) / float(kSubdivision)) };
+	//		vertexDate_[startIndex + 1].position.X = cosf(lat + kLatEvery) * cosf(lon);
+	//		vertexDate_[startIndex + 1].position.Y = sinf(lat + kLatEvery);
+	//		vertexDate_[startIndex + 1].position.Z = cosf(lat + kLatEvery) * sinf(lon);
+	//		vertexDate_[startIndex + 1].position.W = 1.0f;
+	//		vertexDate_[startIndex + 1].texcoord = { u,v - (float(1.0f) / float(kSubdivision)) };
 
-			vertexDate_[startIndex + 4].normal.x = vertexDate_[startIndex + 4].position.X;
-			vertexDate_[startIndex + 4].normal.y = vertexDate_[startIndex + 4].position.Y;
-			vertexDate_[startIndex + 4].normal.z = vertexDate_[startIndex + 4].position.Z;
+	//		vertexDate_[startIndex + 1].normal.x = vertexDate_[startIndex + 1].position.X;
+	//		vertexDate_[startIndex + 1].normal.y = vertexDate_[startIndex + 1].position.Y;
+	//		vertexDate_[startIndex + 1].normal.z = vertexDate_[startIndex + 1].position.Z;
 
 
-			vertexDate_[startIndex + 5].position.X = cosf(lat) * cosf(lon + kLonEvery);
-			vertexDate_[startIndex + 5].position.Y = sinf(lat);
-			vertexDate_[startIndex + 5].position.Z = cosf(lat) * sinf(lon + kLonEvery);
-			vertexDate_[startIndex + 5].position.W = 1.0f;
-			vertexDate_[startIndex + 5].texcoord = { u + (float(1.0f) / float(kSubdivision)),v };
+	//		vertexDate_[startIndex + 2].position.X = cosf(lat) * cosf(lon + kLonEvery);
+	//		vertexDate_[startIndex + 2].position.Y = sinf(lat);
+	//		vertexDate_[startIndex + 2].position.Z = cosf(lat) * sinf(lon + kLonEvery);
+	//		vertexDate_[startIndex + 2].position.W = 1.0f;
+	//		vertexDate_[startIndex + 2].texcoord = { u + (float(1.0f) / float(kSubdivision)),v };
 
-			vertexDate_[startIndex + 5].normal.x = vertexDate_[startIndex + 5].position.X;
-			vertexDate_[startIndex + 5].normal.y = vertexDate_[startIndex + 5].position.Y;
-			vertexDate_[startIndex + 5].normal.z = vertexDate_[startIndex + 5].position.Z;
+	//		vertexDate_[startIndex + 2].normal.x = vertexDate_[startIndex + 2].position.X;
+	//		vertexDate_[startIndex + 2].normal.y = vertexDate_[startIndex + 2].position.Y;
+	//		vertexDate_[startIndex + 2].normal.z = vertexDate_[startIndex + 2].position.Z;
 
-		}
-	}
+
+	//		vertexDate_[startIndex + 3].position.X = cosf(lat + kLatEvery) * cosf(lon);
+	//		vertexDate_[startIndex + 3].position.Y = sinf(lat + kLatEvery);
+	//		vertexDate_[startIndex + 3].position.Z = cosf(lat + kLatEvery) * sinf(lon);
+	//		vertexDate_[startIndex + 3].position.W = 1.0f;
+	//		vertexDate_[startIndex + 3].texcoord = { u,v - (float(1.0f) / float(kSubdivision)) };
+
+	//		vertexDate_[startIndex + 3].normal.x = vertexDate_[startIndex + 3].position.X;
+	//		vertexDate_[startIndex + 3].normal.y = vertexDate_[startIndex + 3].position.Y;
+	//		vertexDate_[startIndex + 3].normal.z = vertexDate_[startIndex + 3].position.Z;
+
+
+	//		vertexDate_[startIndex + 4].position.X = cosf(lat + kLatEvery) * cosf(lon + kLonEvery);
+	//		vertexDate_[startIndex + 4].position.Y = sinf(lat + kLatEvery);
+	//		vertexDate_[startIndex + 4].position.Z = cosf(lat + kLatEvery) * sinf(lon + kLonEvery);
+	//		vertexDate_[startIndex + 4].position.W = 1.0f;
+	//		vertexDate_[startIndex + 4].texcoord = { u + (float(1.0f) / float(kSubdivision)),v - (float(1.0f) / float(kSubdivision)) };
+
+	//		vertexDate_[startIndex + 4].normal.x = vertexDate_[startIndex + 4].position.X;
+	//		vertexDate_[startIndex + 4].normal.y = vertexDate_[startIndex + 4].position.Y;
+	//		vertexDate_[startIndex + 4].normal.z = vertexDate_[startIndex + 4].position.Z;
+
+
+	//		vertexDate_[startIndex + 5].position.X = cosf(lat) * cosf(lon + kLonEvery);
+	//		vertexDate_[startIndex + 5].position.Y = sinf(lat);
+	//		vertexDate_[startIndex + 5].position.Z = cosf(lat) * sinf(lon + kLonEvery);
+	//		vertexDate_[startIndex + 5].position.W = 1.0f;
+	//		vertexDate_[startIndex + 5].texcoord = { u + (float(1.0f) / float(kSubdivision)),v };
+
+	//		vertexDate_[startIndex + 5].normal.x = vertexDate_[startIndex + 5].position.X;
+	//		vertexDate_[startIndex + 5].normal.y = vertexDate_[startIndex + 5].position.Y;
+	//		vertexDate_[startIndex + 5].normal.z = vertexDate_[startIndex + 5].position.Z;
+
+	//	}
+	//}
 
 }
 
@@ -665,7 +674,7 @@ void DXCom::Command()
 
 	commandList_->SetGraphicsRootDescriptorTable(2, useMonsterBall ? textureSrvHandleGPU2 : textureSrvHandleGPU);
 
-	commandList_->DrawInstanced(1536, 1, 0, 0);
+	commandList_->DrawInstanced(6, 1, 0, 0);
 
 
 	/*commandList_->IASetVertexBuffers(0, 1, &vertexBufferViewSprite_);
