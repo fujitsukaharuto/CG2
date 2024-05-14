@@ -50,16 +50,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		Fuji::SetWVP(worldMatrix, worldViewProjectionMatrix);
 
 
-		Matrix4x4 worldMatSprite = MakeAffineMatrix(transSprite.scale, transSprite.rotate, transSprite.translate);
+		//Matrix4x4 worldMatSprite = MakeAffineMatrix(transSprite.scale, transSprite.rotate, transSprite.translate);
 
 
-		Matrix4x4 viewMatSprite = MakeIdentity4x4();
-		Matrix4x4 projectMatSprite = MakeOrthographicMatrix(0.0f, 0.0f, float(Fuji::GetkWindowWidth()), float(Fuji::GetkWindowHeight()), 0.0f, 100.0f);
-		Matrix4x4 worldViewProMatSprite = Multiply(viewMatSprite, projectMatSprite);
-		worldViewProMatSprite = Multiply(worldMatSprite, worldViewProMatSprite);
+		//Matrix4x4 viewMatSprite = MakeIdentity4x4();
+		//Matrix4x4 projectMatSprite = MakeOrthographicMatrix(0.0f, 0.0f, float(Fuji::GetkWindowWidth()), float(Fuji::GetkWindowHeight()), 0.0f, 100.0f);
+		//Matrix4x4 worldViewProMatSprite = Multiply(viewMatSprite, projectMatSprite);
+		//worldViewProMatSprite = Multiply(worldMatSprite, worldViewProMatSprite);
 
 
-		Fuji::SetSpriteWVP(worldMatSprite, worldViewProMatSprite);
+		//Fuji::SetSpriteWVP(worldMatSprite, worldViewProMatSprite);
 
 
 		Fuji::EndFrame();

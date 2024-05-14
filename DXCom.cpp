@@ -367,22 +367,22 @@ void DXCom::SettingGraphicPipeline()
 
 void DXCom::SettingVertex()
 {
-	vertexResource_ = CreateBufferResource(device_, sizeof(VertexData) * 2000);
+	vertexResource_ = CreateBufferResource(device_, sizeof(VertexData) * 6);
 
 	vertexBufferView_.BufferLocation = vertexResource_->GetGPUVirtualAddress();
-	vertexBufferView_.SizeInBytes = sizeof(VertexData) * 2000;
+	vertexBufferView_.SizeInBytes = sizeof(VertexData) * 6;
 	vertexBufferView_.StrideInBytes = sizeof(VertexData);
 
 	vertexDate_ = nullptr;
 	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexDate_));
 
-	SetVertexData(0, { -0.5f,-0.5f,0.0f,1.0f }, { 0.0f,1.0f }, { 0.0f,0.0f,-1.0f });
-	SetVertexData(1, { 0.0f,0.5f,0.0f,1.0f }, { 0.5f,0.0f }, { 0.0f,0.0f,-1.0f });
-	SetVertexData(2, { 0.5f,-0.5f,0.0f,1.0f }, { 1.0f,1.0f }, { 0.0f,0.0f,-1.0f });
+	vertexDate_[0] = { { -0.5f,-0.5f,0.0f,1.0f }, { 0.0f,1.0f }, { 0.0f,0.0f,-1.0f } };
+	vertexDate_[1] = { { 0.0f,0.5f,0.0f,1.0f }, { 0.5f,0.0f }, { 0.0f,0.0f,-1.0f } };
+	vertexDate_[2] = { { 0.5f,-0.5f,0.0f,1.0f }, { 1.0f,1.0f }, { 0.0f,0.0f,-1.0f } };
 
-	SetVertexData(3, { -0.5f,-0.5f,0.5f,1.0f }, { 0.0f,1.0f }, { 0.0f,0.0f,-1.0f });
-	SetVertexData(4, { 0.0f,0.0f,0.0f,1.0f }, { 0.5f,0.0f }, { 0.0f,0.0f,-1.0f });
-	SetVertexData(5, { 0.5f,-0.5f,-0.5f,1.0f }, { 1.0f,1.0f }, { 0.0f,0.0f,-1.0f });
+	/*vertexDate_[3] = { { -0.5f,-0.5f,0.5f,1.0f }, { 0.0f,1.0f }, { 0.0f,0.0f,-1.0f } };
+	vertexDate_[4] = { { 0.0f,0.0f,0.0f,1.0f }, { 0.5f,0.0f }, { 0.0f,0.0f,-1.0f } };
+	vertexDate_[5] = { { 0.5f,-0.5f,-0.5f,1.0f }, { 1.0f,1.0f }, { 0.0f,0.0f,-1.0f } };*/
 
 
 	//const float pi = 3.1415926535f;
@@ -674,7 +674,7 @@ void DXCom::Command()
 
 	commandList_->SetGraphicsRootDescriptorTable(2, useMonsterBall ? textureSrvHandleGPU2 : textureSrvHandleGPU);
 
-	commandList_->DrawInstanced(6, 1, 0, 0);
+	commandList_->DrawInstanced(3, 1, 0, 0);
 
 
 	/*commandList_->IASetVertexBuffers(0, 1, &vertexBufferViewSprite_);
@@ -737,16 +737,6 @@ void DXCom::SetSpriteWVPData(const Matrix4x4& world, const Matrix4x4& wvp)
 {
 	transformationMatDataSprite_->World = world;
 	transformationMatDataSprite_->WVP = wvp;
-}
-
-void DXCom::SetVertexData(const uint32_t index, const Vector4& position, const Vector2& texcord, const Vector3& normal)
-{
-	//改善点
-	//indexをcommonでかってにやってくれるように
-
-	vertexDate_[index].position = position;
-	vertexDate_[index].texcoord = texcord;
-	vertexDate_[index].normal = normal;
 }
 
 void DXCom::ReleaseData()

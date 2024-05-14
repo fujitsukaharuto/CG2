@@ -63,8 +63,6 @@ public:
 	void SetSpriteWVPData(const Matrix4x4& world, const Matrix4x4& wvp);
 
 
-	void SetVertexData(const uint32_t index, const Vector4& position, const Vector2& texcord, const Vector3& normal);
-
 
 	void ReleaseData();
 
