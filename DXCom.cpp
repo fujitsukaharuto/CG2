@@ -514,7 +514,7 @@ void DXCom::SettingResource()
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialDate_));
 	//色変えるやつ（Resource）
 	materialDate_->color = { 1.0f,1.0f,1.0f,1.0f };
-	materialDate_->enableLighting = true;
+	materialDate_->enableLighting = false;
 
 
 	directionalLightResource_ = CreateBufferResource(device_, sizeof(DirectionalLight));
@@ -668,12 +668,12 @@ void DXCom::Command()
 	commandList_->DrawInstanced(1536, 1, 0, 0);
 
 
-	commandList_->IASetVertexBuffers(0, 1, &vertexBufferViewSprite_);
+	/*commandList_->IASetVertexBuffers(0, 1, &vertexBufferViewSprite_);
 	commandList_->SetGraphicsRootConstantBufferView(0, materialResourceSprite_->GetGPUVirtualAddress());
 	commandList_->SetGraphicsRootConstantBufferView(1, transformationMatResourceSprite_->GetGPUVirtualAddress());
 	commandList_->SetGraphicsRootConstantBufferView(3, directionalLightResource_->GetGPUVirtualAddress());
 	commandList_->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU);
-	commandList_->DrawInstanced(6, 1, 0, 0);
+	commandList_->DrawInstanced(6, 1, 0, 0);*/
 }
 
 void DXCom::LastFrame()

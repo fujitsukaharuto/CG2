@@ -43,12 +43,15 @@ public:
 	void SettingIncludeHandle();
 	void SettingRootSignature();
 	void SettingGraphicPipeline();
+
+
 	void SettingVertex();
 	void SettingSpriteVertex();
 	void SettingResource();
 	void SettingSpriteResource();
 	void SettingTexture();
 	void SettingImgui();
+
 
 	void FirstFrame();
 	void SetBarrier();
