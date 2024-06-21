@@ -864,27 +864,24 @@ void DXCom::Command()
 
 
 	//model
-	/*commandList_->RSSetViewports(1, &viewport);
-	commandList_->RSSetScissorRects(1, &scissorRect);
-	commandList_->SetGraphicsRootSignature(roootSignature_);
-	commandList_->SetPipelineState(graphicsPipelineState_);
+
 	commandList_->IASetVertexBuffers(0, 1, &vertexModelBufferView_);
 	commandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	commandList_->SetGraphicsRootConstantBufferView(0, materialResourceModel_->GetGPUVirtualAddress());
 	commandList_->SetGraphicsRootConstantBufferView(1, wvpResourceModel_->GetGPUVirtualAddress());
 	commandList_->SetGraphicsRootConstantBufferView(3, directionalLightResourceModel_->GetGPUVirtualAddress());
 	commandList_->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU2);
-	commandList_->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);*/
+	commandList_->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
 
 
 
-	/*commandList_->IASetIndexBuffer(&indexBufferViewSprite);
+	commandList_->IASetIndexBuffer(&indexBufferViewSprite);
 	commandList_->IASetVertexBuffers(0, 1, &vertexBufferViewSprite_);
 	commandList_->SetGraphicsRootConstantBufferView(0, materialResourceSprite_->GetGPUVirtualAddress());
 	commandList_->SetGraphicsRootConstantBufferView(1, transformationMatResourceSprite_->GetGPUVirtualAddress());
 	commandList_->SetGraphicsRootConstantBufferView(3, directionalLightResource_->GetGPUVirtualAddress());
-	commandList_->SetGraphicsRootDescriptorTable(2, textureSrvHandleGPU);
-	commandList_->DrawIndexedInstanced(6, 1, 0, 0, 0);*/
+	commandList_->SetGraphicsRootDescriptorTable(2, useMonsterBall2 ? textureSrvHandleGPU2 : textureSrvHandleGPU);
+	commandList_->DrawIndexedInstanced(6, 1, 0, 0, 0);
 	/*commandList_->DrawInstanced(6, 1, 0, 0);*/
 }
 
@@ -967,7 +964,7 @@ void DXCom::UpDate()
 		ImGui::TreePop();
 	}*/
 	
-	/*if (ImGui::TreeNode("Sprite"))
+	if (ImGui::TreeNode("Sprite"))
 	{
 		ImGui::DragFloat3("Sprite trans", &transSprite.translate.x, 1.0f, -1280.0f, 1280.0f);
 		ImGui::DragFloat3("Sprite rotate", &transSprite.rotate.x, 0.01f, -4.0f, 4.0f);
@@ -975,17 +972,18 @@ void DXCom::UpDate()
 		ImGui::DragFloat2("uvtrans", &uvTransSprite.translate.x, 0.1f, -1280.0f, 1280.0f);
 		ImGui::DragFloat("uvrotate", &uvTransSprite.rotate.z, 0.01f, -4.0f, 4.0f);
 		ImGui::DragFloat2("uvsclae", &uvTransSprite.scale.x, 0.01f, 0.0f, 6.0f);
+		ImGui::Checkbox("change", &useMonsterBall2);
 		ImGui::TreePop();
-	}*/
+	}
 
-	/*if (ImGui::TreeNode("PlaneModel"))
+	if (ImGui::TreeNode("PlaneModel"))
 	{
 		ImGui::ColorEdit3("Modelcolor", &materialDateModel_->color.X);
 		ImGui::DragFloat3("Modeltrans", &transformModel.translate.x, 0.01f, -2.0f, 2.0f);
 		ImGui::DragFloat3("Modelrotate", &transformModel.rotate.x, 0.01f, -4.0f, 4.0f);
 		ImGui::DragFloat3("Modelscale", &transformModel.scale.x, 0.01f, 0.0f, 6.0f);
 		ImGui::TreePop();
-	}*/
+	}
 	
 	/*if (ImGui::TreeNode("Particle"))
 	{
@@ -1015,7 +1013,7 @@ void DXCom::UpDate()
 	worldViewProjectionMatrix2 = Multiply(worldMatrix2, worldViewProjectionMatrix2);
 
 	wvpDate2_->World = worldMatrix2;
-	wvpDate2_->WVP = worldViewProjectionMatrix2;
+	wvpDate2_->WVP = worldViewProjectionMatrix2;*/
 
 	Matrix4x4 worldMatSprite = MakeAffineMatrix(transSprite.scale, transSprite.rotate, transSprite.translate);
 	Matrix4x4 viewMatSprite = MakeIdentity4x4();
@@ -1038,7 +1036,7 @@ void DXCom::UpDate()
 	worldViewProjectionMatrixModel = Multiply(worldMatrixModel, worldViewProjectionMatrixModel);
 
 	wvpDateModel_->World = worldMatrixModel;
-	wvpDateModel_->WVP = worldViewProjectionMatrixModel;*/
+	wvpDateModel_->WVP = worldViewProjectionMatrixModel;
 
 	/*std::mt19937 random(repopSeed());
 	std::uniform_real_distribution<> number(-3.5, 3.5)
