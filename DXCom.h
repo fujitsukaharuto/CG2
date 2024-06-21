@@ -54,7 +54,7 @@ public:
 	void LastFrame();
 
 	void SetWVPData(const Matrix4x4& world, const Matrix4x4& wvp);
-	void SetSpriteWVPData(const Matrix4x4& world, const Matrix4x4& wvp);
+	//void SetSpriteWVPData(const Matrix4x4& world, const Matrix4x4& wvp);
 
 
 	ID3D12Device* GetDevice() const { return device_.Get(); }
@@ -167,6 +167,8 @@ private:
 	IDxcBlob* vertexShaderBlob_ = nullptr;
 	IDxcBlob* pixelShaderBlob_ = nullptr;
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineState_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineStateNormal_ = nullptr;
+
 
 	//三角形１
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource_ = nullptr;
@@ -183,7 +185,7 @@ private:
 	bool isTriangleDraw_ = true;
 
 	//三角形2
-	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource2_ = nullptr;
+	/*Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource2_ = nullptr;
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView2_{};
 	VertexData* vertexDate2_ = nullptr;
 
@@ -192,18 +194,18 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource2_ = nullptr;
 	Material* materialDate2_ = nullptr;
 	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource2_ = nullptr;
-	DirectionalLight* directionalLightData2_ = nullptr;
-	bool useMonsterBall2 = true;
+	DirectionalLight* directionalLightData2_ = nullptr;*/
+	/*bool useMonsterBall2 = true;*/
 
 	//パーティクル用三角
-	Microsoft::WRL::ComPtr<ID3D12Resource> vertexParticleResource_[particleIndex]{};
+	/*Microsoft::WRL::ComPtr<ID3D12Resource> vertexParticleResource_[particleIndex]{};
 	D3D12_VERTEX_BUFFER_VIEW vertexParticleBufferView_[particleIndex]{};
 	VertexData* vertexParticleDate_[particleIndex]{};
 	Microsoft::WRL::ComPtr<ID3D12Resource> wvpParticleResource_[particleIndex] = { nullptr };
 	
 	TransformationMatrix* wvpParticleDate_[particleIndex] = { nullptr };
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialParticleResource_[particleIndex] = { nullptr };
-	Material* materialParticleDate_[particleIndex] = { nullptr };
+	Material* materialParticleDate_[particleIndex] = { nullptr };*/
 
 
 	//modelData
@@ -219,7 +221,7 @@ private:
 	DirectionalLight* directionalLightDataModel_ = nullptr;
 
 
-	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResourceSprite_ = nullptr;
+	/*Microsoft::WRL::ComPtr<ID3D12Resource> vertexResourceSprite_ = nullptr;
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite_{};
 	VertexData* vertexDataSprite_ = nullptr;
 
@@ -231,7 +233,7 @@ private:
 	TransformationMatrix* transformationMatDataSprite_ = nullptr;
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResourceSprite_ = nullptr;
-	Material* materialDateSprite_ = nullptr;
+	Material* materialDateSprite_ = nullptr;*/
 
 
 	Trans transform{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };

@@ -34,7 +34,9 @@ PixelShaderOutput main(VertxShaderOutput input)
         float NdotL = dot(normalize(input.normal), -gDirectionnalLight.direction);
         float cos = pow(NdotL * 0.5f + 0.5f, 2.0f);
         //float cos = saturate(dot(normalize(input.normal), -gDirectionnalLight.direction));
-        output.color = gMaterial.color * textureColor * gDirectionnalLight.color * cos * gDirectionnalLight.intensity;
+        //output.color = gMaterial.color * textureColor * gDirectionnalLight.color * cos * gDirectionnalLight.intensity;
+        output.color.rgb = gMaterial.color.rgb * textureColor.rgb * gDirectionnalLight.color.rgb * cos * gDirectionnalLight.intensity;
+        output.color.a = gMaterial.color.a * textureColor.a;
     }
     else
     {
