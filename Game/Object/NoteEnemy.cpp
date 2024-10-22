@@ -160,6 +160,17 @@ void NoteEnemy::OnCollision(Character* other){
 		}
 	}
 
+	// 衝突相手が障害物の時音符状態なら敵状態に戻す
+	else if (collisionType == static_cast< uint32_t >(CollisionTypeIdDef::kBoss)){
+
+		// 音符に代わっているときにボスと衝突したら消す
+		if (isChangedNote_){
+			isChangedNote_ = false;
+
+		}
+
+	}
+
 	// 衝突相手がbossなら消去する
 	else if (collisionType == static_cast< uint32_t >(CollisionTypeIdDef::kBoss)){
 
@@ -178,6 +189,8 @@ void NoteEnemy::OnCollision(Character* other){
 		}
 
 	}
+	
+	
 }
 
 

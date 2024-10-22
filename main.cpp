@@ -133,6 +133,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	modelManager->LoadOBJ("chorus.obj");
 	modelManager->LoadOBJ("enemy.obj");
 	modelManager->LoadOBJ("note.obj");
+	modelManager->LoadOBJ("obstacle.obj");
 	modelManager->LoadOBJ("chainNote.obj");
 	modelManager->LoadOBJ("verticalBar.obj");
 	modelManager->LoadOBJ("horizontalBar.obj");

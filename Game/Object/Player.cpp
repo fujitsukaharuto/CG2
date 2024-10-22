@@ -6,6 +6,7 @@
 #include "Collision/BoxCollider.h"
 #include "GlobalVariables/GlobalVariables.h"
 #include "Object/Boss.h"
+#include "Object/Obstacle.h"
 
 #include "Field/Field.h"
 
@@ -226,6 +227,53 @@ void Player::OnCollision(Character* other){
 
         // プレイヤーをボスから少し右に押し出す
         playerPos.x += 0.5f;  // 右方向に押し出す距離を調整
+        playerCollider->SetPosition(playerPos);
+
+        // ノックバック状態に設定
+        isKnockedBack_ = true;
+        knockbackTimer_ = 0.5f;  // ノックバックの継続時間を設定
+
+        life_--;
+        Audio::GetInstance()->SoundPlayWave(damageSE_);
+        emit.pos = GetCenterPos();
+        emit.BurstAnime();
+    }
+
+
+    // 障害物と衝突したとき
+    else if (collisionType == static_cast< uint32_t >(CollisionTypeIdDef::kObstacle)){
+        Obstacle* obstacle = static_cast< Obstacle* >(other);
+        SphereCollider* obstacleCollider = static_cast< SphereCollider* >(other->GetCollider());
+        SphereCollider* playerCollider = static_cast< SphereCollider* >(this->GetCollider());
+
+        uint32_t serialNum = obstacle->GetSerialNumber();
+
+        if (record_.CheckRecord(serialNum)){
+            return;
+        }
+
+        // 履歴に登録
+        record_.AddRecord(serialNum);
+
+        Vector3 playerPos = playerCollider->GetPosition();
+        Vector3 obstaclePos = obstacleCollider->GetPosition();
+
+        // プレイヤーと障害物のX座標の差を計算
+        float xDifference = playerPos.x - obstaclePos.x;
+
+        // ノックバックの方向を決定（右から衝突：右に、左から衝突：左に飛ばす）
+        float direction = (xDifference > 0) ? 1.0f : -1.0f;
+
+        const float kObstacleCollisionXVelocity = 0.2f * direction;  // 水平方向の速度
+        const float kObstacleCollisionYVelocity = 0.2f;  // 上方向の速度
+
+        // X方向の速度を設定
+        velocity_.x = kObstacleCollisionXVelocity;
+        // Y方向の速度も設定
+        velocity_.y = kObstacleCollisionYVelocity;
+
+        // プレイヤーを障害物から少し押し出す（右方向または左方向）
+        playerPos.x += 0.5f * direction;
         playerCollider->SetPosition(playerPos);
 
         // ノックバック状態に設定

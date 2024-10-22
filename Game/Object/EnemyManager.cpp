@@ -269,7 +269,7 @@ Object3d* EnemyManager::CreateSingleEnemyModel(){
 
 Object3d* EnemyManager::CreateObstacleModel(){
 	Object3d* model = new Object3d;
-	model->Create("debugSphere.obj");
+	model->Create("obstacle.obj");
 	return model;
 }
 
