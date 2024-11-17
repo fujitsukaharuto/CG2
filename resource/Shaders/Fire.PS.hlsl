@@ -48,7 +48,7 @@ float AddFineNoiseTexture(float2 uv, float time)
 float3 GetFireColor(float intensity)
 {
     // 炎の色のグラデーション：赤から黄色、オレンジ、白に変化（濃さを強調）
-    float3 fireColor = lerp(float3(1.0, 0.2, 0.0), float3(1.0f, 1.0f, 1.0f), intensity * 0.8f);
+    float3 fireColor = lerp(float3(1.0, 0.0, 0.0), float3(1.0f, 1.0f, 1.0f), intensity * 0.8f);
     return fireColor;
 }
 
