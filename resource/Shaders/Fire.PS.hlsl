@@ -44,11 +44,11 @@ float AddFineNoiseTexture(float2 uv, float time)
     return fineNoiseTexture.Sample(g_Sampler, animatedFineUV).r;
 }
 
-// 炎の色を時間と共に動的に変化させる
+// 炎の色を時間と共に動的に変化させる（濃さ調整）
 float3 GetFireColor(float intensity)
 {
-    // 炎の色のグラデーション：強度に応じて赤から黄色、オレンジ、白に変化
-    float3 fireColor = lerp(float3(1.0, 0.5, 0.0), float3(1.0f, 1.0f, 1.0f), intensity * 0.5f);
+    // 炎の色のグラデーション：赤から黄色、オレンジ、白に変化（濃さを強調）
+    float3 fireColor = lerp(float3(1.0, 0.2, 0.0), float3(1.0f, 1.0f, 1.0f), intensity * 0.8f);
     return fireColor;
 }
 
@@ -64,7 +64,7 @@ float4 main(PSInput input) : SV_TARGET
     if (normalizedUV.x < g_Fire.rangeMin.x || normalizedUV.x > g_Fire.rangeMax.x ||
         normalizedUV.y < g_Fire.rangeMin.y || normalizedUV.y > g_Fire.rangeMax.y)
     {
-        return baseColor; // 範囲外は元のテクスチャをそのまま返す
+        return float4(baseColor.rgb, 1.0f); // 範囲外は元のテクスチャをそのまま返す
     }
 
     // マスクのフェード効果
@@ -78,7 +78,10 @@ float4 main(PSInput input) : SV_TARGET
 
     // 細かいノイズを追加（色計算前に強度に加算）
     float fineNoise = AddFineNoiseTexture(normalizedUV, g_Fire.time);
-    intensity += fineNoise * 0.1f; // 細かいノイズが炎の強度に影響
+    intensity += fineNoise * 0.15f; // 細かいノイズの影響を増加
+
+    // 強度を調整して炎の効果を濃くする
+    intensity = pow(intensity, 1.2f); // 強度を強調（明るい部分をさらに強く）
 
     // 時間に応じた炎の色を取得
     float3 fireColor = GetFireColor(intensity);
@@ -86,12 +89,15 @@ float4 main(PSInput input) : SV_TARGET
     // 炎の最終的な色を計算
     float3 fireEffect = fireColor * intensity;
 
+    // fireColor の明るさ（輝度）を計算
+    float fireBrightness = dot(fireColor, float3(0.299f, 0.587f, 0.114f));
+
+    // fireBrightness を使って炎と元の色のブレンド比率を動的に調整
+    float adjustedBlendFactor = g_Fire.blendStrength * maskValue * saturate(fireBrightness);
+
     // 元の色と炎のエフェクトをブレンド
-    float3 finalColor = lerp(baseColor.rgb, fireEffect, g_Fire.blendStrength);
+    float3 finalColor = lerp(baseColor.rgb, fireEffect, adjustedBlendFactor);
 
-    // マスクに基づく透明度調整（maskValueが低いほど透明に）
-    float alpha = lerp(1.0f, 0.0f, 1.0f - maskValue); // maskValueが0に近いほど透明に
-
-    // 最終的な色と透明度を設定
-    return float4(finalColor, alpha);
+    // 常に透明度は1.0
+    return float4(finalColor, 1.0f);
 }
