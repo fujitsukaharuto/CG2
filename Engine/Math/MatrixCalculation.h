@@ -111,6 +111,21 @@ struct ShockWaveData {
 };
 
 
+struct FireElement {
+	float animeTime; // アニメーション時間
+	Vector2 resolution; // 画面解像度
+	float distortionStrength; // UVディストーションの強度
+	float highlightStrength; // ハイライトの強度
+	float detailScale; // 細かいノイズのスケール
+	Vector2 rangeMin; // 炎の描画範囲（最小UV）
+	Vector2 rangeMax; // 炎の描画範囲（最大UV）
+	float scale; // Voronoiノイズのスケール
+	float speed; // 炎の揺らぎ速度
+	float noiseSpeed; // 細かいノイズの移動速度
+	float blendStrength;// どれくらい混ぜるか
+};
+
+
 /// <summary>
 /// 2次元ベクトルのスカラー倍を求める
 /// </summary>

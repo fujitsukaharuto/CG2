@@ -7,6 +7,7 @@
 #include "GaussPipeline.h"
 #include "NonePipeline.h"
 #include "ShockWavePipe.h"
+#include "FirePipe.h"
 
 
 
@@ -35,6 +36,7 @@ void PipelineManager::CreatePipeline() {
 	std::unique_ptr<GaussPipeline> gaussPipeline = nullptr;
 	std::unique_ptr<NonePipeline> nonePipeline = nullptr;
 	std::unique_ptr<ShockWavePipe> shockWave = nullptr;
+	std::unique_ptr<FirePipe> firePipe = nullptr;
 
 
 	nonePipeline.reset(new NonePipeline());
@@ -70,6 +72,10 @@ void PipelineManager::CreatePipeline() {
 	shockWave.reset(new ShockWavePipe);
 	shockWave->Initialize();
 	pipelines_.push_back(std::move(shockWave));
+
+	firePipe.reset(new FirePipe);
+	firePipe->Initialize();
+	pipelines_.push_back(std::move(firePipe));
 
 }
 

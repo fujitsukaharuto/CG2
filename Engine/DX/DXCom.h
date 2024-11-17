@@ -16,6 +16,7 @@
 
 #include "FPSKeeper.h"
 #include "PipelineManager.h"
+#include "TextureManager.h"
 #include "Camera.h"
 
 
@@ -199,11 +200,19 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> shockResource_ = nullptr;
 	ShockWaveData* shockData_;
 
+	Microsoft::WRL::ComPtr<ID3D12Resource> fireResource_ = nullptr;
+	FireElement* fireData_;
+
+	Texture* baseTex_;
+	Texture* voronoTex_;
+	Texture* noiseTex_;
+
 	bool isGrayscale_ = true;
 	bool isNonePost_ = true;
 	bool isMetaBall_ = true;
 	bool isGaussian_ = true;
 	bool isShockWave_ = true;
+	bool isFire_ = true;
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexGrayResource_ = nullptr;
 	D3D12_VERTEX_BUFFER_VIEW vertexGrayBufferView_{};

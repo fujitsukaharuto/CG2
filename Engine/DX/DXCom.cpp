@@ -194,6 +194,22 @@ void DXCom::CreateRenderTargets()
 	shockData_->intensity = 0.15f;
 	shockData_->padding = 0.0f;
 
+
+	fireResource_ = CreateBufferResource(device_, sizeof(FireElement));
+	fireData_ = nullptr;
+	fireResource_->Map(0, nullptr, reinterpret_cast<void**>(&fireData_));
+	fireData_->animeTime = 0.0f;
+	fireData_->resolution = { 1280.0f, 720.0f };
+	fireData_->distortionStrength = 0.08f;
+	fireData_->highlightStrength = 0.6f;
+	fireData_->detailScale = 15.0f;
+	fireData_->rangeMin = { 0.0f,0.0f };
+	fireData_->rangeMax = { 0.25f,0.25f };
+	fireData_->scale = 5.0f;
+	fireData_->speed = 0.8f;
+	fireData_->noiseSpeed = 0.5f;
+	fireData_->blendStrength = 0.7f;
+
 }
 
 void DXCom::CreateDepthBuffer()
@@ -279,6 +295,7 @@ void DXCom::SettingGraphicPipeline()
 	isMetaBall_ = false;
 	isGaussian_ = false;
 	isShockWave_ = false;
+	isFire_ = false;
 }
 
 void DXCom::CreateBarrier(D3D12_RESOURCE_STATES before, D3D12_RESOURCE_STATES after) {
@@ -308,6 +325,11 @@ void DXCom::SettingTexture()
 
 	offTextureHandleCPU_ = srvManager->GetCPUDescriptorHandle(offscreenSRVIndex_);
 	offTextureHandle_ = srvManager->GetGPUDescriptorHandle(offscreenSRVIndex_);
+
+	baseTex_ = TextureManager::GetInstance()->LoadTexture("Gradient02.jpg");
+	voronoTex_ = TextureManager::GetInstance()->LoadTexture("T_Noise04.jpg");
+	noiseTex_= TextureManager::GetInstance()->LoadTexture("T_Noise02-300x300.jpg");
+
 
 
 	CommandExecution();
@@ -418,6 +440,21 @@ void DXCom::PostEffect()
 		commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
 	}
 
+	if (isFire_) {
+		command_->SetViewAndscissor();
+		pipeManager_->SetPipeline(Pipe::Fire);
+
+		commandList->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		commandList->IASetIndexBuffer(&indexGrayBufferView_);
+		commandList->IASetVertexBuffers(0, 1, &vertexGrayBufferView_);
+		commandList->SetGraphicsRootDescriptorTable(0, offTextureHandle_);
+		commandList->SetGraphicsRootDescriptorTable(1, baseTex_->gpuHandle);
+		commandList->SetGraphicsRootDescriptorTable(2, voronoTex_->gpuHandle);
+		commandList->SetGraphicsRootDescriptorTable(3, noiseTex_->gpuHandle);
+		commandList->SetGraphicsRootConstantBufferView(4, fireResource_->GetGPUVirtualAddress());
+		commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
+	}
+
 }
 
 void DXCom::PostDraw() {
@@ -479,6 +516,7 @@ void DXCom::UpDate()
 	bool preIsMetaBall_ = isMetaBall_;
 	bool preIsGaussian_ = isGaussian_;
 	bool preIsShock_ = isShockWave_;
+	bool preIsFire_ = isFire_;
 
 	if (ImGui::TreeNode("OffScreen ShaderPath"))
 	{
@@ -487,6 +525,7 @@ void DXCom::UpDate()
 		ImGui::Checkbox("Meta", &isMetaBall_);
 		ImGui::Checkbox("Blur", &isGaussian_);
 		ImGui::Checkbox("shock", &isShockWave_);
+		ImGui::Checkbox("fire", &isFire_);
 		ImGui::TreePop();
 	}
 	if (isGrayscale_ && !(preIsGrayscale_))
@@ -495,6 +534,7 @@ void DXCom::UpDate()
 		isMetaBall_ = false;
 		isGaussian_ = false;
 		isShockWave_ = false;
+		isFire_ = false;
 	}
 	if (isNonePost_ && !(preIsNonePost_))
 	{
@@ -502,6 +542,7 @@ void DXCom::UpDate()
 		isMetaBall_ = false;
 		isGaussian_ = false;
 		isShockWave_= false;
+		isFire_ = false;
 	}
 	if (isMetaBall_ && !(preIsMetaBall_))
 	{
@@ -509,6 +550,7 @@ void DXCom::UpDate()
 		isNonePost_ = false;
 		isGaussian_ = false;
 		isShockWave_= false;
+		isFire_ = false;
 	}
 	if (isGaussian_ && !(preIsGaussian_))
 	{
@@ -516,21 +558,47 @@ void DXCom::UpDate()
 		isNonePost_ = false;
 		isMetaBall_ = false;
 		isShockWave_= false;
+		isFire_ = false;
 	}
 	if (isShockWave_ && !(preIsShock_)) {
 		isGrayscale_ = false;
 		isNonePost_ = false;
 		isMetaBall_ = false;
 		isGaussian_ = false;
+		isFire_ = false;
+	}
+	if (isFire_ && !(preIsFire_)) {
+		isGrayscale_ = false;
+		isNonePost_ = false;
+		isMetaBall_ = false;
+		isGaussian_ = false;
+		isShockWave_ = false;
 	}
 
 	if (ImGui::Button("shock")) {
 		shockData_->shockTime = 0.0f;
 	}
 
+	if (ImGui::TreeNode("FireData")) {
+		ImGui::DragFloat("animeTime", &fireData_->animeTime, 0.1f, 0.0f, 60.0f);
+		ImGui::DragFloat2("resolution", &fireData_->resolution.x);
+		ImGui::DragFloat("distortionStrength", &fireData_->distortionStrength, 0.01f);
+		ImGui::DragFloat("highlightStrength", &fireData_->highlightStrength, 0.01f);
+		ImGui::DragFloat("detailScale", &fireData_->detailScale, 0.01f);
+		ImGui::DragFloat2("rangeMin", &fireData_->rangeMin.x, 0.01f);
+		ImGui::DragFloat2("rangeMax", &fireData_->rangeMax.x, 0.01f);
+		ImGui::DragFloat("scale", &fireData_->scale, 0.1f);
+		ImGui::DragFloat("speed", &fireData_->speed, 0.1f);
+		ImGui::DragFloat("noiseSpeed", &fireData_->noiseSpeed, 0.01f);
+		ImGui::DragFloat("blend", &fireData_->blendStrength, 0.01f);
+		ImGui::TreePop();
+	}
+
+
 	ImGui::End();
 
 	shockData_->shockTime += 0.025f;
+	fireData_->animeTime += 0.025f;
 
 #endif // _DEBUG
 

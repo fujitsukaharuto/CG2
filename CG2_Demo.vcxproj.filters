@@ -149,6 +149,9 @@
     <ClCompile Include="Engine\GraphicPipeline\ShockWavePipe.cpp">
       <Filter>Engine\GraphicPipeline</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\GraphicPipeline\FirePipe.cpp">
+      <Filter>Engine\GraphicPipeline</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Field\MapChipField.h">
@@ -307,6 +310,9 @@
     <ClInclude Include="Engine\GraphicPipeline\ShockWavePipe.h">
       <Filter>Engine\GraphicPipeline</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\GraphicPipeline\FirePipe.h">
+      <Filter>Engine\GraphicPipeline</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -411,6 +417,12 @@
       <Filter>resource\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="resource\Shaders\ShockWave.PS.hlsl">
+      <Filter>resource\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="resource\Shaders\Fire.VS.hlsl">
+      <Filter>resource\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="resource\Shaders\Fire.PS.hlsl">
       <Filter>resource\Shaders</Filter>
     </FxCompile>
   </ItemGroup>

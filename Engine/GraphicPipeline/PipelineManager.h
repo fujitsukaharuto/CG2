@@ -13,6 +13,7 @@ enum class Pipe : int {
 	Gauss,
 	MetaBall,
 	ShockWave,
+	Fire,
 };
 
 
