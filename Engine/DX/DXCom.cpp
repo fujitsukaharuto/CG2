@@ -200,15 +200,15 @@ void DXCom::CreateRenderTargets()
 	fireResource_->Map(0, nullptr, reinterpret_cast<void**>(&fireData_));
 	fireData_->animeTime = 0.0f;
 	fireData_->resolution = { 1280.0f, 720.0f };
-	fireData_->distortionStrength = 0.08f;
+	fireData_->distortionStrength = 0.09f;
 	fireData_->highlightStrength = 0.6f;
-	fireData_->detailScale = 15.0f;
+	fireData_->detailScale = 8.88f;
 	fireData_->rangeMin = { 0.0f,0.0f };
-	fireData_->rangeMax = { 0.25f,0.25f };
-	fireData_->scale = 5.0f;
-	fireData_->speed = 0.8f;
-	fireData_->noiseSpeed = 0.5f;
-	fireData_->blendStrength = 0.7f;
+	fireData_->rangeMax = { 1.0f,1.0f };
+	fireData_->scale = 1.44f;
+	fireData_->speed = 4.56f;
+	fireData_->noiseSpeed = -0.12f;
+	fireData_->blendStrength = 2.0f;
 
 }
 
@@ -587,8 +587,8 @@ void DXCom::UpDate()
 		ImGui::DragFloat("detailScale", &fireData_->detailScale, 0.01f);
 		ImGui::DragFloat2("rangeMin", &fireData_->rangeMin.x, 0.01f);
 		ImGui::DragFloat2("rangeMax", &fireData_->rangeMax.x, 0.01f);
-		ImGui::DragFloat("scale", &fireData_->scale, 0.1f);
-		ImGui::DragFloat("speed", &fireData_->speed, 0.1f);
+		ImGui::DragFloat("scale", &fireData_->scale, 0.01f);
+		ImGui::DragFloat("speed", &fireData_->speed, 0.01f);
 		ImGui::DragFloat("noiseSpeed", &fireData_->noiseSpeed, 0.01f);
 		ImGui::DragFloat("blend", &fireData_->blendStrength, 0.01f);
 		ImGui::TreePop();
