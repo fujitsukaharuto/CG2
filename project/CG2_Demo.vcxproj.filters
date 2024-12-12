@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Game\Field\MapChipField.cpp">
-      <Filter>Game\Field</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Audio\Audio.cpp">
       <Filter>Engine\Audio</Filter>
     </ClCompile>
@@ -203,17 +200,17 @@
     <ClCompile Include="Game\GameObj\JoyState\JoyState.cpp">
       <Filter>Game\JoyState</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Field\Field.cpp">
-      <Filter>Game\Field</Filter>
-    </ClCompile>
     <ClCompile Include="Game\GameObj\GameCamera\GameCamera.cpp">
       <Filter>Game\GameObj\GameCamera</Filter>
     </ClCompile>
+    <ClCompile Include="Game\GameObj\Field\Field.cpp">
+      <Filter>Game\GameObj\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameObj\SkyDome\SkyDome.cpp">
+      <Filter>Game\GameObj\SkyDome</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game\Field\MapChipField.h">
-      <Filter>Game\Field</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Audio\Audio.h">
       <Filter>Engine\Audio</Filter>
     </ClInclude>
@@ -430,11 +427,14 @@
     <ClInclude Include="Game\GameObj\JoyState\JoyState.h">
       <Filter>Game\JoyState</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Field\Field.h">
-      <Filter>Game\Field</Filter>
-    </ClInclude>
     <ClInclude Include="Game\GameObj\GameCamera\GameCamera.h">
       <Filter>Game\GameObj\GameCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameObj\Field\Field.h">
+      <Filter>Game\GameObj\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameObj\SkyDome\SkyDome.h">
+      <Filter>Game\GameObj\SkyDome</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -476,9 +476,6 @@
     </Filter>
     <Filter Include="Engine\GraphicPipeline">
       <UniqueIdentifier>{a7aec92a-a6ed-4e8d-b70e-d00475873d04}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Field">
-      <UniqueIdentifier>{474c6061-5ccc-4a22-b89f-a7917901b616}</UniqueIdentifier>
     </Filter>
     <Filter Include="resource\Shaders">
       <UniqueIdentifier>{721d04ed-0430-462c-a558-1b345031cb69}</UniqueIdentifier>
@@ -524,6 +521,12 @@
     </Filter>
     <Filter Include="Game\GameObj\GameCamera">
       <UniqueIdentifier>{0ac72fdb-75dc-4114-828f-a862d4677131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameObj\Field">
+      <UniqueIdentifier>{969ca529-80bb-49a1-8195-acbbf409ffeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameObj\SkyDome">
+      <UniqueIdentifier>{5818e449-9305-4256-b73f-f698542f9c0b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

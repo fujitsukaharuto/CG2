@@ -3,7 +3,8 @@
 
 ///* object
 #include"GameObj/Player/Player.h"
-#include"Field/Field.h"
+#include"GameObj/Field/Field.h"
+#include"GameObj/SkyDome/SkyDome.h"
 #include"GameObj/GameCamera/GameCamera.h"
 
 class GameScene :public BaseScene
@@ -32,5 +33,6 @@ private:
 	///* obj
 	std::unique_ptr<Player>player_;
 	std::unique_ptr<Field>field_;
+	std::unique_ptr<SkyDome>skydome_;
 	std::unique_ptr<GameCamera>gameCamera_;
 };

@@ -21,6 +21,7 @@ void GameScene::Initialize() {
 	obj3dCommon = std::make_unique<Object3dCommon>();
 	player_ = std::make_unique<Player>();
 	field_ = std::make_unique<Field>();
+	skydome_ = std::make_unique<SkyDome>();
 	gameCamera_ = std::make_unique<GameCamera>();
 
 	///-------------------------------------------------------------
@@ -28,6 +29,7 @@ void GameScene::Initialize() {
 	///-------------------------------------------------------------- 
 	obj3dCommon->Initialize();
 	field_->Initialize();
+	skydome_->Initialize();
 	player_->Initialize();
 	gameCamera_->Initialize();
 
@@ -44,6 +46,7 @@ void GameScene::Update() {
 	///　更新
 	///-------------------------------------------------------------- 
 	field_->Update();
+	skydome_->Update();
 	player_->Update();
 	gameCamera_->Update();
 
@@ -69,7 +72,7 @@ void GameScene::Draw() {
 	///-------------------------------------------------------------
 	///　モデル描画
 	///-------------------------------------------------------------- 
-
+	skydome_->Draw();
 	field_->Draw();
 	player_->Draw();
 
